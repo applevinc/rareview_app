@@ -22,20 +22,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 10.h),
-          Text(
-            'Tap to edit',
-            style: AppText.bold300(context).copyWith(
-              color: AppColors.primary,
-              fontSize: 10.sp,
-            ),
-          ),
-          SizedBox(height: 10.h),
-          const _PeopleListView(),
-        ],
-      ),
+      body: const _PeopleListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showAddEditPersonBottomSheet(context);
@@ -55,18 +42,50 @@ class _PeopleListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<User> people = ref.watch(peopleProvider);
-    return Expanded(
-      child: ListView.separated(
-        itemCount: people.length,
-        physics: const BouncingScrollPhysics(),
-        padding: AppPadding.symetricHorizontalOnly,
-        itemBuilder: (context, index) {
-          final person = people[index];
-          return _PersonItem(person);
-        },
-        separatorBuilder: (context, index) {
-          return SizedBox(height: 20.h);
-        },
+
+    if (people.isEmpty) {
+      return const _EmptyListView();
+    }
+
+    return Column(
+      children: [
+        SizedBox(height: 10.h),
+        Text(
+          'Tap to edit',
+          style: AppText.bold300(context).copyWith(
+            color: AppColors.primary,
+            fontSize: 10.sp,
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Expanded(
+          child: ListView.separated(
+            itemCount: people.length,
+            physics: const BouncingScrollPhysics(),
+            padding: AppPadding.symetricHorizontalOnly,
+            itemBuilder: (context, index) {
+              final person = people[index];
+              return _PersonItem(person);
+            },
+            separatorBuilder: (context, index) {
+              return SizedBox(height: 20.h);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyListView extends StatelessWidget {
+  const _EmptyListView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'No person available',
+        style: AppText.bold500(context).copyWith(),
       ),
     );
   }

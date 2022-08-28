@@ -74,7 +74,7 @@ class BaseAuthView extends StatelessWidget {
                         ),
                       )
                     : const SizedBox.shrink(),
-                subtitle != null ? SizedBox(height: 106.h) : SizedBox(height: 100.h),
+                subtitle != null ? SizedBox(height: 106.h) : SizedBox(height: 50.h),
                 form,
               ],
             ),

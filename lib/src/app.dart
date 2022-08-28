@@ -11,13 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
+      minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           title: 'Template',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
           home: const SplashScreen(),
-         // home: const MyHomePage(title: 'Template'),
+          // home: const MyHomePage(title: 'Template'),
         );
       },
     );

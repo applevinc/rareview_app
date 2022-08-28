@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rareview_app/src/modules/authentication/screens/login_screen.dart';
@@ -20,7 +19,6 @@ class CreateAccountScreen extends StatefulWidget {
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _fullNameController;
-  late final TextEditingController _phoneNumberController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -28,7 +26,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   void initState() {
     super.initState();
     _fullNameController = TextEditingController();
-    _phoneNumberController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -36,7 +33,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   void dispose() {
     _fullNameController.dispose();
-    _phoneNumberController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -44,7 +40,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final gap = 42.h;
+    final gap = 10.h;
 
     return BaseAuthView(
       title: 'Create Account',
@@ -60,12 +56,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             CustomTextField(
               controller: _emailController,
               lableText: 'Email',
-            ),
-            SizedBox(height: gap),
-            CustomTextField(
-              controller: _phoneNumberController,
-              lableText: 'Phone Number',
-              textInputType: TextInputType.number,
             ),
             SizedBox(height: gap),
             PasswordTextField(controller: _passwordController),

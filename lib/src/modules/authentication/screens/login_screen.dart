@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               lableText: 'Email',
               textInputAction: TextInputAction.next,
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: 10.h),
             PasswordTextField(
               controller: _passwordController,
               textInputAction: TextInputAction.done,
