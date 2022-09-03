@@ -13,7 +13,7 @@ import 'package:rareview_app/src/shared/widgets/input/custom_textfield.dart';
 class AddEditPersonView extends ConsumerStatefulWidget {
   const AddEditPersonView({Key? key, this.person}) : super(key: key);
 
-  final User? person;
+  final UserProfile? person;
 
   @override
   HomeViewState createState() => HomeViewState();
@@ -54,18 +54,16 @@ class HomeViewState extends ConsumerState<AddEditPersonView> {
           name: _userNameController.text.trim(),
           email: _emailController.text.trim(),
         );
-        NotificationMessage.showSucessSnackBar(
-            message: 'Update successful', context: context);
+        NotificationMessage.showSucess(message: 'Update successful', context: context);
       } else {
         controller.add(
-          User(
+          UserProfile(
             id: HelperFunctions.generateUniqueId(),
             name: _userNameController.text.trim(),
             email: _emailController.text.trim(),
           ),
         );
-        NotificationMessage.showSucessSnackBar(
-            message: 'Added successfully', context: context);
+        NotificationMessage.showSucess(message: 'Added successfully', context: context);
       }
 
       Navigator.pop(context);

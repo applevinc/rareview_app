@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rareview_app/src/modules/authentication/screens/login_screen.dart';
+import 'package:rareview_app/src/modules/authentication/screens/signin_screen.dart';
 import 'package:rareview_app/src/shared/styles/colors.dart';
 import 'package:rareview_app/src/shared/styles/text.dart';
 import 'package:rareview_app/src/shared/utils/navigator.dart';
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 3), () async {
       // Navigate to next screen
-      AppNavigator.pushAndRemoveUntil(context, const LoginScreen());
+      AppNavigator.pushAndRemoveUntil(context, const SignInScreen());
     });
   }
 

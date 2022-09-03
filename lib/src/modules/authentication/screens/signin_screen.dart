@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rareview_app/src/modules/authentication/screens/create_account_screen.dart';
+import 'package:rareview_app/src/modules/authentication/controllers/auth_controller.dart';
+import 'package:rareview_app/src/modules/authentication/screens/signup_screen.dart';
 import 'package:rareview_app/src/modules/authentication/widgets/base_auth_view.dart';
 import 'package:rareview_app/src/modules/dashboard/screens/dashboard_view.dart';
+import 'package:rareview_app/src/shared/models/failure.dart';
 import 'package:rareview_app/src/shared/styles/text.dart';
 import 'package:rareview_app/src/shared/utils/navigator.dart';
+import 'package:rareview_app/src/shared/utils/notification_message.dart';
 import 'package:rareview_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:rareview_app/src/shared/widgets/buttons/custom_text_button.dart';
 import 'package:rareview_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:rareview_app/src/shared/widgets/input/password_textfield.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignInScreen extends ConsumerStatefulWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
@@ -36,13 +40,35 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void signIn() async {
+    if (_formKey.currentState!.validate()) {
+      final controller = ref.read(authProvider.notifier);
+
+      try {
+        await controller.signIn(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        NotificationMessage.showSucess(
+            message: 'Account creation success', context: context);
+        AppNavigator.pushAndRemoveUntil(context, const DashboardView());
+      } on Failure {
+        NotificationMessage.showError(
+            message: 'Failed to create an account', context: context);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
     return BaseAuthView(
       title: 'Welcome',
       showClose: false,
       form: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             CustomTextField(
@@ -68,9 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 54.h),
             AppButton(
               label: 'Sign In',
-              onTap: () {
-                AppNavigator.to(context, const DashboardView());
-              },
+              isLoading: authState == AuthState.loading,
+              onTap: signIn,
             ),
             SizedBox(height: 44.h),
             Text(
@@ -83,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomTextButton(
               label: 'Sign Up',
               onTap: () {
-                AppNavigator.to(context, const CreateAccountScreen());
+                AppNavigator.to(context, const SignUpScreen());
               },
             ),
           ],

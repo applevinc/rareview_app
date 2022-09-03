@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:rareview_app/src/shared/models/datastore.dart';
 import 'package:rareview_app/src/shared/models/failure.dart';
 
+const networkDelay = Duration(seconds: 3);
+
 class RequestHelper {
   static Future<dynamic> getRequest(String url, {Map<String, String>? header}) async {
     header ??= <String, String>{};

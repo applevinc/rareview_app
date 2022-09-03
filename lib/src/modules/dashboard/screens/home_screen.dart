@@ -41,7 +41,7 @@ class _PeopleListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<User> people = ref.watch(peopleProvider);
+    List<UserProfile> people = ref.watch(peopleProvider);
 
     if (people.isEmpty) {
       return const _EmptyListView();
@@ -94,7 +94,7 @@ class _EmptyListView extends StatelessWidget {
 class _PersonItem extends ConsumerWidget {
   const _PersonItem(this.person, {Key? key}) : super(key: key);
 
-  final User person;
+  final UserProfile person;
 
   void _delete(WidgetRef ref) {
     final controller = ref.read(peopleProvider.notifier);
@@ -153,7 +153,8 @@ class _PersonItem extends ConsumerWidget {
   }
 }
 
-Future<dynamic> _showAddEditPersonBottomSheet(BuildContext context, {User? person}) {
+Future<dynamic> _showAddEditPersonBottomSheet(BuildContext context,
+    {UserProfile? person}) {
   return showCustomBottomSheet(
     context: context,
     body: AddEditPersonView(person: person),

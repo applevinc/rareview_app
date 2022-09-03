@@ -31,7 +31,7 @@ class NotificationMessage {
     );
   }
 
-  static showErrorSnackBar({
+  static showError({
     required String message,
     required BuildContext context,
   }) {
@@ -43,7 +43,7 @@ class NotificationMessage {
     );
   }
 
-  static showSucessSnackBar({
+  static showSucess({
     required String message,
     required BuildContext context,
   }) {

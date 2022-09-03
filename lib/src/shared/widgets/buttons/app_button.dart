@@ -35,7 +35,7 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: ElevatedButton(
-        onPressed: isLoading ? null : onTap,
+        onPressed: isLoading ? () {} : onTap,
         style: ElevatedButton.styleFrom(
           primary: backgroundColor ?? AppColors.primary,
           elevation: elevation,
@@ -47,8 +47,8 @@ class AppButton extends StatelessWidget {
         ),
         child: isLoading
             ? SizedBox(
-                height: 50.w,
-                width: 50.w,
+                height: 20.w,
+                width: 20.w,
                 child: const CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
